@@ -3,7 +3,7 @@ const { ethers } = require('hardhat')
 const fs = require('fs-extra')
 
 async function main() {
-  const [deployer] = await ethers.getSigners(3)
+  const [deployer] = await ethers.getSigners(2)
   console.log(`Deploying contracts with account ${deployer.address}`)
 
   const balance = await deployer.getBalance()
