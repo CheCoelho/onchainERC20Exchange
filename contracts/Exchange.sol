@@ -80,8 +80,7 @@ contract Exchange {
         address _listingAgent = msg.sender;
         address _tokenAddress = registeredTokens[_tokenId];
         IERC20 token = IERC20(_tokenAddress);
-        bool allowed = token.approve(address(this), _allowance);
-        require(allowed, "Error setting allowance");
+  
         
         Listings[_id].token = token;
         Listings[_id].agent = payable(_listingAgent);
