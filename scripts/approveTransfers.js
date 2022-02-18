@@ -1,5 +1,4 @@
 const { ethers } = require('hardhat')
-const address = require
 var TokenDeploymentData = require('../instance/Token.json')
 var ExchangeDeploymentData = require('../instance/Exchange.json')
 
@@ -16,14 +15,25 @@ async function main() {
   const tokenContract = await Token.attach(TokenCurrentDeployment)
   const exchangeContract = await Exchange.attach(ExchangeCurrentDeployment)
 
-  await tokenContract.approve(ExchangeCurrentDeployment, 100)
-  let approved = await tokenContract.allowance(
-    lister.address,
-    ExchangeCurrentDeployment
-  )
-  console.log(
-    `Token owner has allowed the Exchange contract to transfer ${approved.toString()} tokens to buyers.`
-  )
+  try {
+    await tokenContract.approve(ExchangeCurrentDeployment, 100)
+    let approved = await tokenContract.allowance(
+      lister.address,
+      ExchangeCurrentDeployment
+    )
+    console.log(
+      `Token owner has allowed the Exchange contract to transfer ${approved.toString()} tokens to buyers.`
+    )
+  } catch (error) {
+    console.error(error)
+  }
+
+  try {
+    await exchangeContract.registerToken(TokenCurrentDeployment)
+    console.log('The token has been registered on the exchange')
+  } catch (error) {
+    console.log(error)
+  }
 }
 main()
   .then(() => process.exit(0))
