@@ -1,18 +1,22 @@
 const { ethers } = require('hardhat')
-// const fs = require('fs')
 const fs = require('fs-extra')
+var TokenDeploymentData = require('../instance/Token.json')
+var ExchangeDeploymentData = require('../instance/Exchange.json')
 
 async function main() {
-  const [deployer] = await ethers.getSigners(2)
-  console.log(`Deploying contracts with account ${deployer.address}`)
+  const TokenCurrentDeployment = TokenDeploymentData.currentDeployment
+  const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
+  const Exchange = await ethers.getContractFactory('Exchange')
+  const exchangeContract = Exchange.attach(ExchangeCurrentDeployment)
 
-  const balance = await deployer.getBalance()
+  const [addr1, addr2, addr3] = await ethers.getSigners()
+  console.log(`Deploying contracts with account ${addr1.address}`)
+
+  const balance = await addr1.getBalance()
   console.log(`Account balance: ${balance.toString()}`)
 
-  const Exchange = await ethers.getContractFactory('Exchange')
   const exchange = await Exchange.deploy()
   console.log(`Exchange address: ${exchange.address}`)
-
   await createDeploymentInstance(exchange.address, 'Exchange')
 
   const data = {
@@ -21,7 +25,6 @@ async function main() {
   }
   fs.writeFileSync('abi/Exchange.json', JSON.stringify(data))
 }
-
 const createDeploymentInstance = async (contractAddress, name) => {
   try {
     await fs.writeJson(`./instance/${name}.json`, {
