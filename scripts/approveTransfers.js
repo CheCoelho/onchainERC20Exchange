@@ -6,19 +6,21 @@ async function main() {
   const TokenCurrentDeployment = TokenDeploymentData.currentDeployment
   const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
 
-  const [lister] = await ethers.getSigners(0)
+  const [addr1, owner, lister] = await ethers.getSigners()
   console.log(lister.address)
 
   const Token = await ethers.getContractFactory('Token')
   const Exchange = await ethers.getContractFactory('Exchange')
 
-  const tokenContract = await Token.attach(TokenCurrentDeployment)
-  const exchangeContract = await Exchange.attach(ExchangeCurrentDeployment)
+  const tokenContract = Token.attach(TokenCurrentDeployment)
+  const exchangeContract = Exchange.attach(ExchangeCurrentDeployment)
 
   try {
+    test = await tokenContract.balanceOf(addr1.address)
+    console.log('TEST', test)
     await tokenContract.approve(ExchangeCurrentDeployment, 100)
     let approved = await tokenContract.allowance(
-      lister.address,
+      addr1.address,
       ExchangeCurrentDeployment
     )
     console.log(
