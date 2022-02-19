@@ -4,14 +4,12 @@ var ExchangeDeploymentData = require('../instance/Exchange.json')
 async function main() {
   const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
 
-  const [lister] = await ethers.getSigners(0)
-  console.log(lister.address)
-
   const Exchange = await ethers.getContractFactory('Exchange')
 
-  const exchangeContract = await Exchange.attach(ExchangeCurrentDeployment)
+  const exchangeContract = Exchange.attach(ExchangeCurrentDeployment)
   try {
-    await exchangeContract.listAsset(0, 100, 1)
+    test = await exchangeContract.listAsset(0, 100, 1)
+    console.log(test)
     let listing = await exchangeContract.getListing(0)
     console.log(listing)
   } catch (error) {
