@@ -16,9 +16,9 @@ contract Exchange {
     
     address public admin;
 
-    uint tokenCount = 0;
-    uint totalOrders = 0;
-    uint totalListings = 0;
+    uint public tokenCount = 0;
+    uint public totalOrders = 0;
+    uint public totalListings = 0;
 
     mapping(uint=>address) registeredTokens;
     mapping(uint=>Order) Orders;
