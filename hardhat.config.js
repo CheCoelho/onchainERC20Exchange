@@ -2,12 +2,6 @@ require('@nomiclabs/hardhat-waffle')
 require('@nomiclabs/hardhat-web3')
 
 require
-require('dotenv').config()
-
-privateKey1 = process.env.PRIVATE_KEY1
-privateKey2 = process.env.PRIVATE_KEY2
-privateKey3 = process.env.PRIVATE_KEY3
-network = process.env.RINKBY_INFURA_ENDPOINT
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -31,10 +25,6 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 1337,
-    },
-    rinkeby: {
-      url: network,
-      accounts: [`0x${privateKey1}`, `0x${privateKey2}`, `0x${privateKey3}`],
     },
   },
 }
