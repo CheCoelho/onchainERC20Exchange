@@ -110,15 +110,15 @@ contract Exchange {
     function triggerOrderFullfillment (
         uint _orderId, 
         uint _listingId,
-        uint _amount,
+        uint _tokenAmount,
         address _tokenAddress
         ) public {
-            fulfillOrder(_orderId, _listingId, _amount, _tokenAddress);
+            fulfillOrder(_orderId, _listingId, _tokenAmount, _tokenAddress);
         }
     function fulfillOrder(
         uint _orderId, 
         uint _listingId,
-        uint _amount,
+        uint _tokenAmount,
         address _tokenAddress
         ) private  {
             Order memory order = Orders[_orderId];
@@ -128,8 +128,10 @@ contract Exchange {
             address orderAgent = order.agent;
             uint price = order.funding;
 
+            _updateOrder(_orderId, _tokenAmount);
+            _updateListing(_listingId, _tokenAmount);
             listingAgent.transfer(price);
-            _safeTransferFrom(token,  listingAgent, orderAgent, _amount);
+            _safeTransferFrom(token, listingAgent, orderAgent, _tokenAmount);
         }
 
     function _safeTransferFrom(
@@ -140,5 +142,18 @@ contract Exchange {
     ) private {
         bool sent = token.transferFrom(sender, recipient, amount);
         require(sent, "Token transfer failed");
+    }
+
+    function _updateOrder(uint _orderId, uint _amount) private {
+        Orders[_orderId].fulfilled = _amount;
+        if (Orders[_orderId].amount == _amount) {
+            Orders[_orderId].closed = true;
+        }
+    }
+      function _updateListing(uint _listingId, uint _amount) private {
+        Listings[_listingId].remaining -= _amount;
+        if (Listings[_listingId].remaining == 0) {
+            Listings[_listingId].emptied = true;
+        }
     }
 }
