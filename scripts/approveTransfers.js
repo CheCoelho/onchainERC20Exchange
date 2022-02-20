@@ -9,7 +9,6 @@ async function main() {
   const [addr1] = await ethers.getSigners()
 
   const Token = await ethers.getContractFactory('Token')
-  const Exchange = await ethers.getContractFactory('Exchange')
 
   const tokenContract = Token.attach(TokenCurrentDeployment)
 
