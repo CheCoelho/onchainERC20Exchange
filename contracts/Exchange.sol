@@ -25,6 +25,7 @@ contract Exchange {
     mapping(uint=>Listing) Listings;
 
     struct Order {
+        uint id;
         IERC20 token;
         address agent;
         uint fulfilled;
@@ -34,6 +35,7 @@ contract Exchange {
     }
 
     struct Listing {
+        uint id;
         IERC20 token;
         address payable agent;
         uint allowance;
@@ -70,7 +72,7 @@ contract Exchange {
         address _tokenAddress = registeredTokens[_tokenId];
         IERC20 token = IERC20(_tokenAddress);
   
-        
+        Listings[_id].id = _id;
         Listings[_id].token = token;
         Listings[_id].agent = payable(_listingAgent);
         Listings[_id].allowance = _allowance;
@@ -86,7 +88,8 @@ contract Exchange {
         address _agent = msg.sender;
         address _tokenAddress = registeredTokens[_tokenId];
         IERC20 orderedToken = IERC20(_tokenAddress);
-        
+                
+        Orders[_id].id = _id;
         Orders[_id].token = orderedToken;
         Orders[_id].agent = _agent;
         Orders[_id].amount = _amount;
@@ -135,7 +138,7 @@ contract Exchange {
 
     function _updateOrder(uint _orderId, uint _amount) private {
         Orders[_orderId].fulfilled = _amount;
-        if (Orders[_orderId].amount == _amount) {
+        if (Orders[_orderId].amount == Orders[_orderId].fulfilled) {
             Orders[_orderId].closed = true;
         }
     }
