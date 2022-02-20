@@ -6,11 +6,11 @@ const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
 const _tokenId = 0 //Index of the mapping where the token addresses are stored
 const _amount = 10 //Number of tokens to be listed
 const _pricePerToken = 3 //Price in wei for a single token
-const address =
-  '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d' //Address to place order
+const accountTwoPrivateKey =
+  '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'
 
 const provider = new ethers.providers.JsonRpcProvider() // using default http://localhost:8545
-const signer = new ethers.Wallet(address, provider)
+const signer = new ethers.Wallet(accountTwoPrivateKey, provider)
 async function main() {
   const exchangeContract = await ethers.getContractAt(
     'Exchange',

@@ -1,17 +1,23 @@
 const { ethers } = require('hardhat')
 var ExchangeDeploymentData = require('../instance/Exchange.json')
+const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
 
 //Set Listing Params:
 const _tokenId = 0 //Index of the mapping where the token addresses are stored
 const _allownace = 100 //Number of tokens to be listed
 const _pricePerToken = 3 //Price in wei for a single token
+const accountOnePrivateKey =
+  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
 
+const provider = new ethers.providers.JsonRpcProvider() // using default http://localhost:8545
+const signer = new ethers.Wallet(accountOnePrivateKey, provider)
 async function main() {
-  const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
+  const exchangeContract = await ethers.getContractAt(
+    'Exchange',
+    ExchangeCurrentDeployment,
+    signer
+  )
 
-  const Exchange = await ethers.getContractFactory('Exchange')
-
-  const exchangeContract = Exchange.attach(ExchangeCurrentDeployment)
   try {
     let lastListing = await exchangeContract.totalListings()
 
