@@ -50,29 +50,38 @@ async function main() {
         continue
       }
       if (order['token'] === listing['token']) {
+        let tradeSucccess = true
         if (order['funding'] >= listing['pricePerToken'] * order['amount']) {
           console.log('Executing trade...')
-          await exchangeContract.triggerOrderFullfillment(
+          let foo = await exchangeContract.triggerOrderFullfillment(
             orderIndex,
             listingIndex,
             order['amount'],
             order['token']
           )
+        } else {
+          tradeSucccess = false
         }
+
         const updatedOrderAgentTokens = await tokenContract.balanceOf(
           order['agent']
         )
         const tokenName = await tokenContract.name()
         const tokenSymbol = await tokenContract.symbol()
-
-        console.log(
-          `Agent who placed order now has ${updatedOrderAgentTokens} ${tokenName}(${tokenSymbol}) tokens.`
-        )
-        console.log(
-          `The listing agent received ${
-            listing['pricePerToken'] * order['amount']
-          } wei for ${order['amount']} ${tokenName}(${tokenSymbol}) tokens.`
-        )
+        if (tradeSucccess) {
+          console.log(
+            `Agent who placed order now has ${updatedOrderAgentTokens} ${tokenName}(${tokenSymbol}) tokens.`
+          )
+          console.log(
+            `The listing agent received ${
+              listing['pricePerToken'] * order['amount']
+            } wei for ${order['amount']} ${tokenName}(${tokenSymbol}) tokens.`
+          )
+        } else {
+          console.log(
+            `No listings found that match the order prices for order with ID: ${order['id']}.`
+          )
+        }
         // const orderTest = await exchangeContract.getOrder(order['id'])
         // console.log(orderTest)
         // const listingTest = await exchangeContract.getListing(listing['id'])
