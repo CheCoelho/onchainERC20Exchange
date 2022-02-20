@@ -28,12 +28,13 @@ async function main() {
     )
     const listing = await exchangeContract.getListing(parseInt(lastListing))
     console.log(`Listing successfully registered on the exchange: \n 
-    Token Address: ${listing[0]} \n
-    Listed By: ${listing[1]} \n
-    Total Tokens Listed: ${listing[2]} \n
-    Avalaible Tokens: ${listing[3]} \n
-    Price Per Token: ${listing[4]} \n
-    Emptied: ${listing[5]} \n`)
+    Listing ID: ${listing['id']} \n
+    Token Address: ${listing['token']} \n
+    Listed By: ${listing['agent']} \n
+    Total Tokens Listed: ${listing['allowance']} \n
+    Avalaible Tokens: ${listing['remaining']} \n
+    Price Per Token: ${listing['pricePerToken']} \n
+    Emptied: ${listing['emptied']} \n`)
   } catch (error) {
     console.error(error)
   }

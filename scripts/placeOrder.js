@@ -26,12 +26,13 @@ async function main() {
     const order = await exchangeContract.getOrder(lastOrder)
 
     console.log(`Order successfully placed on the exchange: \n 
-    Token Address: ${order[0]} \n
-    Ordered By: ${order[1]} \n
-    Total Tokens Fulfilled: ${order[2]} \n
-    Total Tokens Ordered: ${order[3]} \n
-    Total Funding: ${order[4]} \n
-    Closed: ${order[5]} \n`)
+    Order ID: ${order['id']} \n
+    Token Address: ${order['token']} \n
+    Ordered By: ${order['agent']} \n
+    Total Tokens Fulfilled: ${order['fulfilled']} \n
+    Total Tokens Ordered: ${order['amount']} \n
+    Total Funding: ${order['funding']} \n
+    Closed: ${order['closed']} \n`)
   } catch (error) {
     console.error(error)
   }
