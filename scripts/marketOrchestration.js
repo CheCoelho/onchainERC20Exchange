@@ -53,10 +53,14 @@ async function main() {
         let tradeSucccess = true
         if (order['funding'] >= listing['pricePerToken'] * order['amount']) {
           console.log('Executing trade...')
+          let transferAmount
+          if (order['amount'] <= listing['remaining'])
+            transferAmount = order['amount']
+          else transferAmount = listing['remaining']
           let foo = await exchangeContract.triggerOrderFullfillment(
             orderIndex,
             listingIndex,
-            order['amount'],
+            transferAmount,
             order['token']
           )
         } else {
