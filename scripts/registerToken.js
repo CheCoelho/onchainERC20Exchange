@@ -6,24 +6,15 @@ async function main() {
   const TokenCurrentDeployment = TokenDeploymentData.currentDeployment
   const ExchangeCurrentDeployment = ExchangeDeploymentData.currentDeployment
 
-  const [addr1] = await ethers.getSigners()
-
-  const Token = await ethers.getContractFactory('Token')
   const Exchange = await ethers.getContractFactory('Exchange')
 
-  const tokenContract = Token.attach(TokenCurrentDeployment)
+  const exchangeContract = Exchange.attach(ExchangeCurrentDeployment)
 
   try {
-    await tokenContract.approve(ExchangeCurrentDeployment, 100)
-    let approved = await tokenContract.allowance(
-      addr1.address,
-      ExchangeCurrentDeployment
-    )
-    console.log(
-      `Token owner has allowed the Exchange contract to transfer ${approved.toString()} tokens to buyers.`
-    )
+    await exchangeContract.registerToken(TokenCurrentDeployment)
+    console.log('The token has been registered on the exchange')
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
 }
 main()
