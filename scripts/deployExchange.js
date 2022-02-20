@@ -12,9 +12,6 @@ async function main() {
   const [addr1, addr2, addr3] = await ethers.getSigners()
   console.log(`Deploying contracts with account ${addr1.address}`)
 
-  const balance = await addr1.getBalance()
-  console.log(`Account balance: ${balance.toString()}`)
-
   const exchange = await Exchange.deploy()
   console.log(`Exchange address: ${exchange.address}`)
   await createDeploymentInstance(exchange.address, 'Exchange')
@@ -30,7 +27,9 @@ const createDeploymentInstance = async (contractAddress, name) => {
     await fs.writeJson(`./instance/${name}.json`, {
       currentDeployment: contractAddress,
     })
-    console.log('JSON file created as reference to current deployment')
+    console.log(
+      `JSON file created as reference to current deployment with name: ${name}.json`
+    )
   } catch (err) {
     console.error(err)
   }

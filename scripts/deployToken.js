@@ -12,9 +12,6 @@ async function main() {
   const [addr1, addr2, addr3] = await ethers.getSigners()
   console.log(`Deploying contracts with account ${addr1.address}`)
 
-  const balance = await addr1.getBalance()
-  console.log(`Account balance: ${balance.toString()}`)
-
   const Token = await ethers.getContractFactory('Token')
   const token = await Token.deploy('Test', 'TST')
   console.log(`Token address: ${token.address}`)
@@ -25,28 +22,6 @@ async function main() {
     abi: JSON.parse(token.interface.format('json')),
   }
   fs.writeFileSync('abi/Token.json', JSON.stringify(data))
-
-  // try {
-  //   const tokenContract = Token.attach(TokenCurrentDeployment)
-
-  //   await tokenContract.approve(ExchangeCurrentDeployment, 100)
-  //   let approved = await token.allowance(
-  //     addr1.address,
-  //     ExchangeCurrentDeployment
-  //   )
-  //   console.log(
-  //     `Token owner has allowed the Exchange contract to transfer ${approved.toString()} tokens to buyers.`
-  //   )
-  // } catch (error) {
-  //   console.error(error)
-  // }
-
-  // try {
-  //   await exchangeContract.registerToken(token.address)
-  //   console.log('The token has been registered on the exchange')
-  // } catch (error) {
-  //   console.log(error)
-  // }
 }
 
 const createDeploymentInstance = async (contractAddress, name) => {
@@ -54,7 +29,9 @@ const createDeploymentInstance = async (contractAddress, name) => {
     await fs.writeJson(`./instance/${name}.json`, {
       currentDeployment: contractAddress,
     })
-    console.log('JSON file created as reference to current deployment')
+    console.log(
+      `JSON file created as reference to current deployment with name: ${name}.json`
+    )
   } catch (err) {
     console.error(err)
   }
