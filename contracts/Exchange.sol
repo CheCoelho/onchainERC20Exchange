@@ -13,9 +13,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 
 contract Exchange {
-    
-    address public admin;
-
     uint public tokenCount = 0;
     uint public totalOrders = 0;
     uint public totalListings = 0;
@@ -43,10 +40,6 @@ contract Exchange {
         uint pricePerToken;
         bool emptied;
     }
-
-    constructor() {
-            admin = msg.sender;
-        }
 
     function registerToken(address _token) public {
         registeredTokens[tokenCount] = _token;
@@ -99,6 +92,7 @@ contract Exchange {
 
         totalOrders ++;
     }
+
     function triggerOrderFullfillment (
         uint _orderId, 
         uint _listingId,
@@ -107,6 +101,7 @@ contract Exchange {
         ) public {
             fulfillOrder(_orderId, _listingId, _tokenAmount, _tokenAddress);
         }
+        
     function fulfillOrder(
         uint _orderId, 
         uint _listingId,
