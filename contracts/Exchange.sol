@@ -50,18 +50,7 @@ contract Exchange {
         registeredTokens[tokenCount] = _token;
         tokenCount ++;
     }
- 
-    function purchaseToken(uint _tokenId, address _sender, address _buyer, uint _amount) public {
-        address _tokenAddress = registeredTokens[_tokenId];
-        IERC20 token = IERC20(_tokenAddress);
 
-         require(
-            token.allowance(_sender, address(this)) >= _amount,
-            "The requested amount exceeds the allowance provided by the token holder."
-        );
-        _safeTransferFrom(token,  _sender, _buyer, _amount);
- 
-    }
 
     function getToken(uint _tokenId) public view returns (address) {
         return registeredTokens[_tokenId];
