@@ -26,7 +26,7 @@ async function main() {
   console.log(`Found ${orderCount} orders.`)
   let orders = []
   for (let i = 0; i < orderCount; i++) {
-    let foundOrder = await exchangeContract.getOrder(i)
+    const foundOrder = await exchangeContract.getOrder(i)
     orders.push(foundOrder)
   }
 
@@ -35,17 +35,17 @@ async function main() {
   console.log(`Found ${listingCount} listings.`)
   let listings = []
   for (let i = 0; i < listingCount; i++) {
-    let foundListing = await exchangeContract.getListing(i)
+    const foundListing = await exchangeContract.getListing(i)
     listings.push(foundListing)
   }
 
   for (let orderIndex in orders) {
-    let order = orders[orderIndex]
+    const order = orders[orderIndex]
     if (order['closed']) {
       continue
     }
     for (let listingIndex in listings) {
-      let listing = listings[listingIndex]
+      const listing = listings[listingIndex]
       if (listing['emptied']) {
         continue
       }
@@ -59,9 +59,11 @@ async function main() {
             order['token']
           )
         }
-        let updatedOrderAgentTokens = await tokenContract.balanceOf(order[1])
-        let tokenName = await tokenContract.name()
-        let tokenSymbol = await tokenContract.symbol()
+        const updatedOrderAgentTokens = await tokenContract.balanceOf(
+          order['agent']
+        )
+        const tokenName = await tokenContract.name()
+        const tokenSymbol = await tokenContract.symbol()
 
         console.log(
           `Agent who placed order now has ${updatedOrderAgentTokens} ${tokenName}(${tokenSymbol}) tokens.`
@@ -71,6 +73,10 @@ async function main() {
             listing['pricePerToken'] * order['amount']
           } wei for ${order['amount']} ${tokenName}(${tokenSymbol}) tokens.`
         )
+        // const orderTest = await exchangeContract.getOrder(order['id'])
+        // console.log(orderTest)
+        // const listingTest = await exchangeContract.getListing(listing['id'])
+        // console.log(listingTest)
       }
     }
   }
