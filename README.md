@@ -1,3 +1,9 @@
+## Getting Started
+
+```
+npm install
+```
+
 ## Running scripts one by one
 
 ## STEP 1:
