@@ -1,3 +1,12 @@
+## Overview
+
+This project is a quick implimentation of an on chain exchange that fascilitates the exchange of ERC20 tokens for Ether and vice versa.
+
+The project has been built with the Ethereum chain in mind.
+
+- The Open Zeppelin library has been used to deploy and interact with the ERC20 tokens.
+- The Ethereum development environment of choice is Hardhat, which for the purposes of this project enables one to spin up a local blockchain on which to deploy contracts and test interactions with Hardhat's provided test accounts.
+
 ## Getting Started
 
 ```
@@ -18,7 +27,7 @@ npx hardhat node
 
 For the rest of the steps, run the commands in terminal 2 of 2.
 
-Deploy the exchange contract & the ERC20 contract (ADDR 1)
+Deploy the exchange contract & the ERC20 contract (ADDR 1). To deploy more tokens, use only the second command.
 
 ```
 npx hardhat run scripts/deployExchange.js --network localhost && npx hardhat run scripts/deployToken.js --network localhost
@@ -26,7 +35,7 @@ npx hardhat run scripts/deployExchange.js --network localhost && npx hardhat run
 
 ## STEP 3:
 
-Approve the Exchange Contract to transfer the ERC20 tokens to a recipient (ADDR 1)
+Approve the Exchange Contract to transfer the ERC20 tokens to a recipient (ADDR 1). This step should be followed for every token one desires to be able to trade on the exchange.
 
 This step calls the approve function of the ERC20 contract to allow the the exchange contract to transfer (100) tokens to a recipient.
 This step also registers the ERC20 on the Exchange contract.
@@ -37,7 +46,7 @@ npx hardhat run scripts/approveTransfers.js --network localhost
 
 ## STEP 4:
 
-Register ERC20 as a tradeable asset on the exchange
+Register ERC20 as a tradeable asset on the exchange.
 
 ```
 npx hardhat run scripts/registerToken.js --network localhost
@@ -47,7 +56,7 @@ npx hardhat run scripts/registerToken.js --network localhost
 
 Create a 'token listing' for 100 tokens (ADDR 1)
 
-This step will list (100) tokens on the exchange which can be transferred to a recipient upon placing an order.
+This step will list (100) tokens on the exchange (sell order) which can be transferred to a recipient upon placing an order.
 
 ```
 npx hardhat run scripts/listAsset.js --network localhost
@@ -58,7 +67,7 @@ npx hardhat run scripts/listAsset.js --network localhost
 
 Place an order for 10 ERC20 tokens (ADDR 2)
 
-This step places an order for (10) tokens from Address 2 on the local blockchain and sends the max amount the agent placing the order is willing to pay to the contract.
+This step places an order for (10) tokens (buy order) from Address 2 on the local blockchain and sends the amount the agent placing the order is willing to pay to the contract.
 
 ```
 npx hardhat run scripts/placeOrder.js --network localhost
@@ -94,7 +103,3 @@ In terminal 2 of 2, run the below command to excecute the steps 2 - 7 above.
 npx hardhat run scripts/deployExchange.js --network localhost && npx hardhat run scripts/deployToken.js --network localhost && npx hardhat run scripts/approveTransfers.js --network localhost && npx hardhat run scripts/registerToken.js --network localhost && npx hardhat run scripts/listAsset.js --network localhost && npx hardhat run scripts/placeOrder.js --network localhost && npx hardhat run scripts/marketOrchestration.js --network localhost
 
 ```
-
-## Adding further orders and listings
-
-More orders and listings can easily be added by running steps 4 & 5 above. Step 6 can be run to execute trades to fill these orders and empty the listings.
