@@ -74,7 +74,7 @@ contract Exchange {
         totalListings ++;
     }
 
-    function placeOrder(uint _tokenId, uint _amount) external payable {
+    function placeOrder(uint _tokenId, uint _amount) public payable {
         uint _id = totalOrders; 
         address _agent = msg.sender;
         address _tokenAddress = registeredTokens[_tokenId];
