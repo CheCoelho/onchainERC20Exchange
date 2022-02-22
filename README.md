@@ -2,7 +2,7 @@
 
 This project is a quick implimentation of an on chain exchange that fascilitates the exchange of ERC20 tokens for Ether and vice versa.
 
-The project has been built with the Ethereum chain in mind.
+The project has been built for the ethereum chain for simplicity sake and to demonstrate the functionality. It can easily be plugged into Polygon for more favourable transaction costs.
 
 - The Open Zeppelin library has been used to deploy and interact with the ERC20 tokens.
 - The Ethereum development environment of choice is Hardhat, which for the purposes of this project enables one to spin up a local blockchain on which to deploy contracts and test interactions with Hardhat's provided test accounts.
@@ -38,7 +38,6 @@ npx hardhat run scripts/deployExchange.js --network localhost && npx hardhat run
 Approve the Exchange Contract to transfer the ERC20 tokens to a recipient (ADDR 1). This step should be followed for every token one desires to be able to trade on the exchange.
 
 This step calls the approve function of the ERC20 contract to allow the the exchange contract to transfer (100) tokens to a recipient.
-This step also registers the ERC20 on the Exchange contract.
 
 ```
 npx hardhat run scripts/approveTransfers.js --network localhost
