@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 
 /**
- * @title Storage
+ * @title Exchange
  * @dev An on-chain exchange service capable of fascilitating the bidirectional exchange of Ether for ERC20 tokens. 
  */
 
@@ -57,6 +57,7 @@ contract Exchange {
         return Orders[_orderId];
     }
 
+    //use external modifier
     function listAsset(uint _tokenId, uint _allowance, uint _pricePerToken) public payable {
         uint _id = totalListings; 
         address _listingAgent = msg.sender;
@@ -73,7 +74,8 @@ contract Exchange {
 
         totalListings ++;
     }
-
+    
+    //use external modifier
     function placeOrder(uint _tokenId, uint _amount) public payable {
         uint _id = totalOrders; 
         address _agent = msg.sender;
@@ -91,6 +93,7 @@ contract Exchange {
         totalOrders ++;
     }
 
+    //add require statements
     function triggerOrderFullfillment (
         uint _orderId, 
         uint _listingId,
