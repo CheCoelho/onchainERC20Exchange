@@ -9,6 +9,8 @@ The project has been built for the ethereum chain for simplicity sake and to dem
 
 ## Getting Started
 
+Operating system: Currently untested on mac, but stable on windows while using WSL2
+
 ```
 npm install
 ```
